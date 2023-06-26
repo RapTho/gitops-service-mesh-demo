@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: service-mesh-operators
+  namespace: openshift-gitops
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  labels:
+    name: service-mesh-operators
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/RapTho/service-mesh-demo.git 
+    path: service-mesh/operators  
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: openshift-operators
+    
+  syncPolicy:
+    automated: 
+      prune: true 
+      selfHeal: true 
+      
+    retry:
+      limit: 5 
+      backoff:
+        duration: 5s 
+        factor: 2 
+        maxDuration: 3m 
