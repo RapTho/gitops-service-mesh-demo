@@ -2,6 +2,8 @@ apiVersion: project.openshift.io/v1
 kind: Project
 metadata:
   name: istio-system
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
   labels: 
     argocd.argoproj.io/managed-by: openshift-gitops
 spec:
