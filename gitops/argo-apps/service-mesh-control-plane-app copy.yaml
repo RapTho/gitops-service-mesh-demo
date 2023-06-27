@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: service-mesh-control-plane
+  namespace: istio-system
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  labels:
+    name: service-mesh-control-plane
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/RapTho/service-mesh-demo.git 
+    path: service-mesh/control-plane  
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: istio-system
+    
+  syncPolicy:
+    automated: 
+      prune: true 
+      selfHeal: true 
+      
+    retry:
+      limit: 5 
+      backoff:
+        duration: 5s 
+        factor: 2 
+        maxDuration: 3m 
