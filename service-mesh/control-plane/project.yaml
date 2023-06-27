@@ -1,9 +1,0 @@
-apiVersion: config.openshift.io/v1
-kind: Project
-metadata:
-  name: istio-system
-  labels:
-    argocd.argoproj.io/managed-by: openshift-gitops
-spec:
-  finalizers:
-  - kubernetes
