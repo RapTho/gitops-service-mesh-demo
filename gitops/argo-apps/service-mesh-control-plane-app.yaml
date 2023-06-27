@@ -16,7 +16,7 @@ spec:
 
   destination:
     server: https://kubernetes.default.svc
-    namespace: openshift-gitops
+    namespace: istio-system
     
   syncPolicy:
     automated: 
