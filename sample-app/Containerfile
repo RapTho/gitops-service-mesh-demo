@@ -1,0 +1,29 @@
+# BUILD STAGE
+# Node.js 18.16.1
+FROM node@sha256:35b6b9bf7880fa8a333820d5c296076a35207c477baf0b359e307927ea2a43e3 as builder
+
+WORKDIR /app
+
+# .env and secrets.yml are excluded in .dockerignore
+COPY ["app.js", "package.json", "/app/"]
+
+RUN npm install --production
+
+# RUN STAGE
+# Node.js 18.16.1-alpine
+FROM node@sha256:bf6c61feabc1a1bd565065016abe77fa378500ec75efa67f5b04e5e5c4d447cd
+
+LABEL maintainer="Raphael Tholl raphael.tholl@ibm.com"
+LABEL description="The backend application which powers the GAR-advisor frontend"
+
+WORKDIR /app
+
+COPY --from=builder /app .
+
+EXPOSE 8080
+
+RUN chown -R node:node /app
+
+USER node
+
+CMD ["node", "app.js"]
