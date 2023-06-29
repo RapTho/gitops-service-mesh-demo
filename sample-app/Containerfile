@@ -4,8 +4,7 @@ FROM node@sha256:35b6b9bf7880fa8a333820d5c296076a35207c477baf0b359e307927ea2a43e
 
 WORKDIR /app
 
-# .env and secrets.yml are excluded in .dockerignore
-COPY ["app.js", "package.json", "/app/"]
+COPY ["package.json", "app.js", "/app/"]
 
 RUN npm install --production
 
@@ -19,6 +18,7 @@ LABEL description="The backend application which powers the GAR-advisor frontend
 WORKDIR /app
 
 COPY --from=builder /app .
+COPY routes/ /app/routes
 
 EXPOSE 8080
 

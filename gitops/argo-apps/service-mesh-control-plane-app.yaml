@@ -9,20 +9,16 @@ metadata:
     name: service-mesh-control-plane
 spec:
   project: default
-
   source:
     repoURL: https://github.com/RapTho/service-mesh-demo.git 
     path: service-mesh/control-plane  
-
   destination:
     server: https://kubernetes.default.svc
     namespace: istio-system
-    
   syncPolicy:
     automated: 
       prune: true 
       selfHeal: true 
-      
     retry:
       limit: 5 
       backoff:

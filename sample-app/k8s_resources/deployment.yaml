@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-app
+  labels:
+    app: sample-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sample-app
+  template:
+    metadata:
+      labels: 
+        app: sample-app
+    spec:
+      containers:
+        - name: sample-app
+          image: quay.io/raphael_tholl/sample-app:latest
+          ports: 
+            - containerPort: 8080
+          livenessProbe: 
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 3
+            periodSeconds: 3 

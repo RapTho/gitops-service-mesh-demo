@@ -1,20 +1,20 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: service-mesh-operators
+  name: sample-app
   namespace: openshift-gitops
   finalizers:
     - resources-finalizer.argocd.argoproj.io
   labels:
-    name: service-mesh-operators
+    name: sample-app
 spec:
   project: default
   source:
     repoURL: https://github.com/RapTho/service-mesh-demo.git 
-    path: service-mesh/operators  
+    path: sample-app/k8s-resources 
   destination:
     server: https://kubernetes.default.svc
-    namespace: openshift-operators
+    namespace: dev
   syncPolicy:
     automated: 
       prune: true 

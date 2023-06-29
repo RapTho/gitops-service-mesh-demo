@@ -1,9 +1,8 @@
 const express = require('express');
 const app = express();
-const morgan = required("morgan")
+const morgan = require("morgan")
 
 // Configuration via env variables
-const ROLE = process.env.ROLE || "DEFAULT"
 const PORT = process.env.PORT || 8080
 
 // Logging
@@ -13,9 +12,13 @@ app.use(
     )
   );
 
-app.get('/', (req, res) => {
-  res.send(`Hello my role is: ${ROLE}`);
-});
+// Routes
+app.use("/api/v1", require("./routes/api/v1"));
+
+// Health check endpoints
+app.get("/healthz", (req, res) => {
+  res.sendStatus(200);
+})
 
 const server = app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
