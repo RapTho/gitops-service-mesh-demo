@@ -12,4 +12,3 @@ spec:
     - route:
       - destination: 
           host: sample-app
-          subset: v1
