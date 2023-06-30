@@ -4,8 +4,8 @@ metadata:
   name: sample-app-v1-vs
   namespace: dev
 spec:
-  hosts:
-  - "sample-app"
+  hosts: 
+  - "sample-app.dev.svc.cluster.local"
   gateways:
   - istio-gw
   http:
