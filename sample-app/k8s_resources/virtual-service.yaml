@@ -12,3 +12,5 @@ spec:
     - route:
       - destination: 
           host: sample-app
+          port:
+            number: 8080
