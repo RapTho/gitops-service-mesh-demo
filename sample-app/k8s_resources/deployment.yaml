@@ -4,6 +4,7 @@ metadata:
   name: sample-app
   labels:
     app: sample-app
+    version: v1
 spec:
   replicas: 1
   selector:
