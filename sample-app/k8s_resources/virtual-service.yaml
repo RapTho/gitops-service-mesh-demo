@@ -7,7 +7,7 @@ spec:
   hosts: 
   - sample-app
   gateways:
-  - istio-gw
+  - sample-app-gw
   http:
     - route:
       - destination: 
