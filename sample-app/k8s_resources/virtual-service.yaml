@@ -5,7 +5,7 @@ metadata:
   namespace: dev
 spec:
   hosts: 
-  - sample-app
+  - "*"
   gateways:
   - sample-app-gw
   http:
@@ -15,5 +15,3 @@ spec:
           port: 
             name: http-8080
             number: 8080
-            protocol: HTTP
-          subset: v1
