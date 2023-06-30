@@ -9,10 +9,12 @@ spec:
   selector:
     matchLabels:
       app: sample-app
+      version: v1
   template:
     metadata:
       labels: 
         app: sample-app
+        version: v1
     annotations:
       sidecar.istio.io/inject: "true"
     spec:
