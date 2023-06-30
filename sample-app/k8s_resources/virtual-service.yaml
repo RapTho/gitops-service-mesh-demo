@@ -5,7 +5,7 @@ metadata:
   namespace: dev
 spec:
   hosts:
-  - "*":
+  - "sample-app"
   gateways:
   - istio-gw
   http:
