@@ -13,5 +13,4 @@ spec:
       - destination: 
           host: sample-app
           port: 
-            name: http-8080
             number: 8080
