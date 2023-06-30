@@ -11,7 +11,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/RapTho/service-mesh-demo.git 
-    path: sample-app/k8s-resources 
+    path: sample-app/k8s_resources 
   destination:
     server: https://kubernetes.default.svc
     namespace: dev
