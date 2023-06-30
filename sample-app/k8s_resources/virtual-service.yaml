@@ -1,0 +1,18 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: sample-app-v1-vs
+  namespace: dev
+spec:
+  hosts:
+  - "*":
+  gateways:
+  - istio-gw
+  http:
+    - route:
+      - destination: 
+          host: sample-app
+          port: 
+            name: http-8080
+            number: 8080
+            protocol: HTTP
