@@ -17,6 +17,7 @@ spec:
       annotations:
         sidecar.istio.io/inject: "true"
     spec:
+      serviceAccountName: sample-app-sa
       containers:
         - name: sample-app
           image: quay.io/raphael_tholl/sample-app:latest
