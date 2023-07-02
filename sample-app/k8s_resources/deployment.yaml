@@ -9,7 +9,6 @@ spec:
   selector:
     matchLabels:
       app: sample-app
-      version: v1
   template:
     metadata:
       labels: 
