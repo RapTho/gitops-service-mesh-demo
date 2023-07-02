@@ -9,6 +9,7 @@ spec:
   selector:
     matchLabels:
       app: sample-app
+      version: v1
   template:
     metadata:
       labels: 
@@ -21,6 +22,7 @@ spec:
       containers:
         - name: sample-app
           image: quay.io/raphael_tholl/sample-app:latest
+          imagePullPolicy: IfNotPresent
           ports: 
             - containerPort: 8080
           livenessProbe: 
