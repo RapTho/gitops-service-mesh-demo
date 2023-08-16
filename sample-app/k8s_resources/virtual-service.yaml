@@ -23,8 +23,8 @@ spec:
       - destination: 
           host: sample-app
           subset: v1
-        weight: 50
+        weight: 80
       - destination: 
           host: sample-app
           subset: v2
-        weight: 50
+        weight: 20
