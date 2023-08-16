@@ -9,8 +9,19 @@ spec:
   gateways:
   - sample-app-gw
   http:
+    - match:
+        - headers:
+            env::
+              exact: "dev"
+      route:
+        - destination:
+            host: sample-app
+            subset: v2
+            port: 
+              number: 8080
     - route:
       - destination: 
           host: sample-app
+          subset: v1
           port:
             number: 8080
