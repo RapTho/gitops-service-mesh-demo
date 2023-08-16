@@ -12,6 +12,9 @@ app.use(
     )
   );
 
+// Parse request body as JSON
+app.use(express.json())
+
 // Routes
 app.use("/api/v1", require("./routes/api/v1"));
 
