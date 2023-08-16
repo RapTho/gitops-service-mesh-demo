@@ -17,8 +17,6 @@ spec:
         - destination:
             host: sample-app
             subset: v3
-            port: 
-              number: 8080
     - route:
       - destination: 
           host: sample-app
