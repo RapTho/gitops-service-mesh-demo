@@ -27,6 +27,8 @@ spec:
           env:
           - name: VERSION
             value: mirror
+          - name: DEBUG
+            value: true
           livenessProbe: 
             httpGet:
               path: /healthz
