@@ -21,7 +21,7 @@ spec:
       containers:
         - name: sample-app
           image: quay.io/raphael_tholl/sample-app:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports: 
             - containerPort: 8080
           livenessProbe: 
