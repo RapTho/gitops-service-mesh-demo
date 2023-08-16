@@ -11,7 +11,7 @@ spec:
   http:
     - match:
         - headers:
-            env::
+            env:
               exact: "dev"
       route:
         - destination:
