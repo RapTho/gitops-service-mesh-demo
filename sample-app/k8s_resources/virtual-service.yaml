@@ -23,12 +23,8 @@ spec:
       - destination: 
           host: sample-app
           subset: v1
-          port:
-            number: 8080
         weight: 50
       - destination: 
           host: sample-app
           subset: v2
-          port:
-            number: 8080
         weight: 50
