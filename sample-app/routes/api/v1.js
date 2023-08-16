@@ -2,7 +2,8 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/", (req, res) => {
-res.send(`Hello my version is: ${process.env.VERSION || "v1"}\n`);
+    if (process.env.DEBUG == true) console.log(req.body)  
+    res.send(`Hello my version is: ${process.env.VERSION || "v1"}\n`);
 });
 
 
