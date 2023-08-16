@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: sample-app-v1
   labels:
-    app: sample-app
+    app: sample-app-v1
 spec:
   replicas: 1
   selector:
