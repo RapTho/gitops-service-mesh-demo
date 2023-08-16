@@ -17,6 +17,9 @@ spec:
         - destination:
             host: sample-app
             subset: v3
+      mirror:
+          host: sample-app
+          subset: v4
     - route:
       - destination: 
           host: sample-app
