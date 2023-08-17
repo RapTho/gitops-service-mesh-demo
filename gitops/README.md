@@ -1,5 +1,7 @@
 # Install GitOps
 
+**GitOps Operator = Red Hat's version of ArgoCD**
+
 Create Operator with [subscription.yaml](subscription.yaml)
 
 ```
@@ -31,8 +33,15 @@ Extract the password
 oc extract secret/openshift-gitops-cluster -n openshift-gitops --keys=admin.password --to=-
 ```
 
-### Examples for ArgoCD applications
+# Link Git repo to ArgoCD
+```
+oc apply -f argocd-repository.yaml
+```
 
-GitOps = Red Hat's ArgoCD version
+# Create applications
+```
+oc apply -f argo-apps
+```
+### Examples for ArgoCD applications
 
 See [application-example-with-comments.yaml](application-example-with-comments.yaml)
