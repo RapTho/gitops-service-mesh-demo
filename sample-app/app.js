@@ -18,7 +18,7 @@ app.use(express.json())
 // Routes
 app.use("/api/v1", require("./routes/api/v1"));
 
-// Health check endpoints
+// Health check endpoint
 app.get("/healthz", (req, res) => {
   res.sendStatus(200);
 })
