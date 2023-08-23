@@ -8,12 +8,6 @@ Create Operator with [subscription.yaml](subscription.yaml)
 oc apply -f subscription.yaml
 ```
 
-# Give gitops controller service account cluster-admin role
-
-Just for testing. Don't do this in production!
-```
-oc adm policy add-cluster-role-to-user cluster-admin -z openshift-gitops-argocd-application-controller -n openshift-gitops
-```
 # Open ArgoCD
 
 Open ArgoCD User Interface using firefox.
@@ -34,14 +28,13 @@ oc extract secret/openshift-gitops-cluster -n openshift-gitops --keys=admin.pass
 ```
 
 # Link Git repo to ArgoCD
+
 ```
 oc apply -f argocd-repository.yaml
 ```
 
 # Create applications
+
 ```
 oc apply -f argo-apps
 ```
-### Examples for ArgoCD applications
-
-See [application-example-with-comments.yaml](application-example-with-comments.yaml)
