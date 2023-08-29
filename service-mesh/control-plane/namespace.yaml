@@ -4,3 +4,17 @@ metadata:
   name: istio-system
   labels:
     argocd.argoproj.io/managed-by: openshift-gitops
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: instana-agent
+  labels:
+    argocd.argoproj.io/managed-by: openshift-gitops
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: instana-pop
+  labels:
+    argocd.argoproj.io/managed-by: openshift-gitops
