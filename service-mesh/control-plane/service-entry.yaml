@@ -1,0 +1,25 @@
+apiVersion: networking.istio.io/v1beta1 
+kind: ServiceEntry
+metadata:
+  name: instana-resources
+spec:
+  hosts:
+  - ingress-orange-saas.instana.io
+  - eum-orange-saas.instana.io
+  - synthetics-orange-saas.instana.io
+  - serverless-orange-saas.instana.io
+  - containers.instana.io
+  - icr.io/instana
+  - packages.instana.io
+  - setup.instana.io
+  - artifact-public.instana.io
+  - agents.instana.io/helm
+  ports:
+  - number: 443
+    name: https
+    protocol: HTTPS
+  - number: 80 
+    name: http
+    protocol: HTTP
+  resolution: DNS
+  location: MESH_EXTERNAL
