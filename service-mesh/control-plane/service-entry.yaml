@@ -9,11 +9,11 @@ spec:
   - synthetics-orange-saas.instana.io
   - serverless-orange-saas.instana.io
   - containers.instana.io
-  - icr.io/instana
+  - icr.io
   - packages.instana.io
   - setup.instana.io
   - artifact-public.instana.io
-  - agents.instana.io/helm
+  - agents.instana.io
   ports:
   - number: 443
     name: https
