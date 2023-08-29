@@ -6,3 +6,5 @@ metadata:
 spec:
   members:
     - dev
+    - instana-agent
+    - instana-pop
