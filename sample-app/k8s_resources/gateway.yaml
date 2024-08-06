@@ -3,6 +3,9 @@ kind: Gateway
 metadata:
   name: sample-app-gw
   namespace: dev
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   selector:
     istio: ingressgateway

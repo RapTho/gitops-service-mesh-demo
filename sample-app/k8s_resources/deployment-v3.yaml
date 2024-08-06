@@ -4,6 +4,9 @@ metadata:
   name: sample-app-v3
   labels:
     app: sample-app-v3
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   replicas: 1
   selector:

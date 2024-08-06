@@ -4,6 +4,9 @@ metadata:
   name: sample-app
   labels:
     app: sample-app
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   type: ClusterIP
   selector:
