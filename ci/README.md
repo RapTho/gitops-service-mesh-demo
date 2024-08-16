@@ -47,7 +47,7 @@ Follow these steps to automatically build a container image of the sample-app an
 
 #### Configuration
 
-The [pipelinerun.yaml](pipelinerun.yaml) defines both the `git repository` as well as the `image reference`. To push the final image to another CR, modify line 25 based on the following format.
+The [pipelinerun.yaml](pipelinerun.yaml) defines both the `git repository` as well as the `image reference`. To push the final image to another CR, modify [line 25](pipelinerun.yaml#L25) using the following command. If needed, also change the git repository to your own on [line 23](pipelinerun.yaml#L23).
 
 ```bash
 export IMGREF="myRegistry/myUsername/myImageName:myTag"
@@ -62,10 +62,11 @@ fi
 
 ```
 
-#### Execute the pipeline
+#### Create and execute the pipeline
 
-After creating the secret for your CR and adjusting the CR string in the pipelinerun.yaml execute the pipeline by
+After creating the secret for your CR and adjusting the CR string in the pipelinerun.yaml create and execute the pipeline
 
 ```bash
+kubectl apply -f pipeline.yaml
 kubectl create -f pipelinerun.yaml
 ```
