@@ -2,37 +2,91 @@
 
 A demo of OpenShift Service Mesh deployed using GitOps
 
-## Capabilities demonstrated
+## Key Features
 
 - Traffic routing 80/20 (canary deployment) between application versions v1 / v2
 - Traffic routing based on request header for app v3
 - Mirror traffic from app v3 to app v4 without app v4 having to respond to client requests.
+- Automatic deployment via ArgoCD (GitOps)
+- Automatic container image build pipeline (Tekton)
 
-## Steps to reproduce
+## How to use
 
 1. Install [ArgoCD Operator](/gitops/README.md)
 2. Link the ArgoCD Repository
-3. Let ArgoCD deploy all [sample-app resources](/sample-app/)
+3. Let ArgoCD deploy all [sample-app resources](/sample-app/k8s_resources)
 
-## Modify sample-app
+## How to show
+
+After deploying the service mesh and various application versions, you can showcase the different capabilities using the `curl` requests below.
+
+#### 80/20 traffic routing
+
+Send 10 requests to the app's v1 endpoint
+
+```bash
+export SERVICE_MESH_INGRESS_GW=$(oc -n istio-system get route istio-ingressgateway -o jsonpath="{ .spec.host }")
+
+for i in $(seq 10); do curl http://${SERVICE_MESH_INGRESS_GW}/api/v1; done
+```
+
+And see that the applied [virtual service](sample-app/k8s_resources/virtual-service.yaml) routes approximately 80% to v1 whereas 20% of the responses come from v2. This can be useful for canary deployments.
+
+```bash
+$ for i in $(seq 10); do curl http://${SERVICE_MESH_INGRESS_GW}/api/v1; done
+Hello my version is: v1
+Hello my version is: v2
+Hello my version is: v2
+Hello my version is: v1
+Hello my version is: v1
+Hello my version is: v1
+Hello my version is: v1
+Hello my version is: v2
+Hello my version is: v1
+Hello my version is: v1
+```
+
+#### Header based routing
+
+Send a request with the correct header to make the virtual service route traffic to version 3 of the app. This could especially be useful for testing.
+
+```bash
+curl -H "env: dev" http://${SERVICE_MESH_INGRESS_GW}/api/v1
+```
+
+The response might surprise you. It says its version is development. This is because traffic was routed to v3 of the app, which hard-coded its environment variable `VERSION`in the [deployment-v3.yaml](sample-app/k8s_resources/deployment-v3.yaml)
+
+#### Mirroring traffic
+
+Continuing the previous example of header-based traffic routing, you can also see that traffic to v3 of the app was mirrored to the app's version 4. This will expose versions of the application to live traffic without them ever having to respond to clients directly. Also a great way of observing how your new version behaves in production-like environments.
+
+Send the same request from the previous header-based traffic routing example and then extract the logs of the app's v4 pod.
+
+```bash
+curl -H "env: dev" http://${SERVICE_MESH_INGRESS_GW}/api/v1
+kubectl logs -l version=v4 | grep -v /healthz
+```
+
+## Customize the demo
 
 If you want to modify the sample-app, you need to rebuild and republish the container image<br>
 
-Enter the following information as environment variable
+#### Continious Integration
 
-```
+To automatically build the app from source, check out the [Continuous Integration (CI)](ci/README.md) section of this repository.
+
+#### Manual build and push
+
+To manually build the application you need `docker` or `podman`. Both binaries can be used interchangeably.
+
+```bash
 export CR=quay.io
-export UN=raphael_tholl
+export CR_USER=raphael_tholl
 export IMAGE_NAME=sample-app
 export TAG=latest
-```
 
-After you applied your changes to the source code perform the following steps. Use a container engine such as [podman](https://podman.io)
-
-```
-podman login ${CR}
-podman build -t ${CR}/${UN}/${IMAGE_NAME}:${TAG} /path/to/Containerfile
-podman push ${CR}/${UN}/${IMAGE_NAME}:${TAG}
+podman build -t ${CR}/${CR_USER}/${IMAGE_NAME}:${TAG} sample-app/
+podman push ${CR}/${CR_USER}/${IMAGE_NAME}:${TAG}
 ```
 
 ## Author
