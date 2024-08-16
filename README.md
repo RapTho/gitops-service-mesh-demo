@@ -56,7 +56,7 @@ Send a request with the correct header to make the virtual service route traffic
 curl -H "env: dev" http://${SERVICE_MESH_INGRESS_GW}/api/v1
 ```
 
-The response might surprise you. It says its version is development. This is because traffic was routed to v3 of the app, which hard-coded its environment variable `VERSION`in the [deployment-v3.yaml](sample-app/k8s_resources/deployment-v3.yaml#L32)
+The response might surprise you. It says its version is development. This is because traffic was routed to v3 of the app, which hard-coded its environment variable `VERSION` in the [deployment-v3.yaml](sample-app/k8s_resources/deployment-v3.yaml#L32)
 
 ```bash
 $ curl -H "env: dev" http://${SERVICE_MESH_INGRESS_GW}/api/v1
@@ -87,7 +87,7 @@ To automatically build the app from source, check out the [Continuous Integratio
 
 #### Manual build and push
 
-To manually build the application you need `docker` or `podman`. Both binaries can be used interchangeably.
+To manually build the container image you need `docker` or `podman`. Both binaries can be used interchangeably.
 
 ```bash
 export CR=quay.io
