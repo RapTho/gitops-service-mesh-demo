@@ -1,0 +1,3 @@
+k8s_resources/
+dist/
+package-lock.json

@@ -1,12 +1,11 @@
-const express = require("express");
+import express, { Request, Response } from 'express';
 const router = express.Router();
 
-router.get("/", (req, res) => {
+router.get("/", (req: Request, res: Response) => {
     res.send(`Hello my version is: ${process.env.VERSION || "v1"}\n`);
 });
 
-router.post("/echo", (req, res) => {
-    if (process.env.DEBUG == "true") console.log(`req.body = ${JSON.stringify(req.body)}`)  
+router.post("/echo", (req: Request, res: Response) => {
     res.send(`The client sent: ${JSON.stringify(req.body)}\n`);
 })
 
