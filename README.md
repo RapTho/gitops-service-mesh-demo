@@ -56,7 +56,7 @@ Send a request with the correct header to make the virtual service route traffic
 curl -H "env: dev" http://${SERVICE_MESH_INGRESS_GW}/api/v1
 ```
 
-The response might surprise you. It says its version is development. This is because traffic was routed to v3 of the app, which hard-coded its environment variable `VERSION`in the [deployment-v3.yaml](sample-app/k8s_resources/deployment-v3.yaml)
+The response might surprise you. It says its version is development. This is because traffic was routed to v3 of the app, which hard-coded its environment variable `VERSION`in the [deployment-v3.yaml](sample-app/k8s_resources/deployment-v3.yaml#L32)
 
 ```bash
 $ curl -H "env: dev" http://${SERVICE_MESH_INGRESS_GW}/api/v1
