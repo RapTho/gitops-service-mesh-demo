@@ -4,7 +4,7 @@ metadata:
   name: sample-app-dr
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   host: sample-app.dev.svc.cluster.local
   subsets:

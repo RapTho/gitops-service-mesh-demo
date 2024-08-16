@@ -6,7 +6,7 @@ metadata:
     app: sample-app
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   type: ClusterIP
   selector:

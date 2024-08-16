@@ -3,6 +3,8 @@ kind: Application
 metadata:
   name: sample-app
   namespace: openshift-gitops
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
   finalizers:
     - resources-finalizer.argocd.argoproj.io
   labels:
@@ -10,7 +12,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/RapTho/service-mesh-demo.git 
+    repoURL: https://github.com/RapTho/gitops-service-mesh-demo.git 
     path: sample-app/k8s_resources 
   destination:
     server: https://kubernetes.default.svc
