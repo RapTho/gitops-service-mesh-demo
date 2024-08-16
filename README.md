@@ -20,6 +20,8 @@ A demo of OpenShift Service Mesh deployed using GitOps
 
 After deploying the service mesh and various application versions, you can showcase the different capabilities using the `curl` requests below.
 
+Note that all requests go to the same endpoint. Traffic routing is done on the server side using a [virtual service](sample-app/k8s_resources/virtual-service.yaml).
+
 #### 80/20 traffic routing
 
 Send 10 requests to the app's v1 endpoint
@@ -56,15 +58,23 @@ curl -H "env: dev" http://${SERVICE_MESH_INGRESS_GW}/api/v1
 
 The response might surprise you. It says its version is development. This is because traffic was routed to v3 of the app, which hard-coded its environment variable `VERSION`in the [deployment-v3.yaml](sample-app/k8s_resources/deployment-v3.yaml)
 
+```bash
+$ curl -H "env: dev" http://${SERVICE_MESH_INGRESS_GW}/api/v1
+Hello my version is: development
+```
+
 #### Mirroring traffic
 
-Continuing the previous example of header-based traffic routing, you can also see that traffic to v3 of the app was mirrored to the app's version 4. This will expose versions of the application to live traffic without them ever having to respond to clients directly. Also a great way of observing how your new version behaves in production-like environments.
+Continuing the previous example, you'll see that traffic to v3 was mirrored to the app's v4. Important to stress here is, that v4 never answers to client requests. This is still only done by v3.
+Mirroring requests enables you to observe your app handling live requests in a production-like environment.
 
 Send the same request from the previous header-based traffic routing example and then extract the logs of the app's v4 pod.
 
 ```bash
-curl -H "env: dev" http://${SERVICE_MESH_INGRESS_GW}/api/v1
-kubectl logs -l version=v4 | grep -v /healthz
+$ curl -H "env: dev" http://${SERVICE_MESH_INGRESS_GW}/api/v1
+Hello my version is: development
+$ kubectl logs -l version=v4 | grep -v /healthz
+::ffff:10.129.2.235 - - [16/Aug/2024:14:45:38 +0000] 'GET /api/v1 HTTP/1.1' 200 28
 ```
 
 ## Customize the demo
