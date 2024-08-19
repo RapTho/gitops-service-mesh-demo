@@ -23,3 +23,6 @@ spec:
   - name: v5
     labels:
       version: v5
+  - name: v6
+    labels:
+      version: v6
