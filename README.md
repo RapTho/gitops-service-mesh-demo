@@ -78,7 +78,7 @@ Send the same request from the previous header-based traffic routing example and
 $ curl -H "env: dev" http://${SERVICE_MESH_INGRESS_GW}/api/v1
 Hello my version is: development
 $ kubectl logs -l version=v4 | grep -v /healthz
-::ffff:10.129.2.235 - - [16/Aug/2024:14:45:38 +0000] 'GET /api/v1 HTTP/1.1' 200 28
+::ffff:127.0.0.6 - - [19/Aug/2024:14:39:09 +0000] "GET /api/v1/ HTTP/1.1" 200 28 "-" "curl/8.7.1"
 ```
 
 #### Chaos testing
