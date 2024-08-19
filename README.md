@@ -8,10 +8,9 @@ A demo of OpenShift Service Mesh deployed using GitOps
 - Traffic routing based on request header for app v3
 - Mirror traffic from app v3 to app v4 without app v4 having to respond to client requests.
 - Chaos testing: fake HTTP 5XX responses.
-- Automatic request retry
-- Circuit breaker
 - Automatic deployment via ArgoCD (GitOps)
 - Automatic container image build pipeline (Tekton)
+- Kiali Dashboard to visualize request flows
 
 ## How to use
 
@@ -26,6 +25,8 @@ After deploying the service mesh and various application versions, you can showc
 Note that all requests go to the same endpoint. Traffic routing is done on the server side using a [virtual service](sample-app/k8s_resources/virtual-service.yaml).
 
 #### 80/20 traffic routing
+
+![80-20-traffic-routing.png](docs/images/80-20-traffic-routing.png)
 
 Send 10 requests to the app's v1 endpoint
 
@@ -82,6 +83,7 @@ $ kubectl logs -l version=v4 | grep -v /healthz
 
 #### Chaos testing
 
+![chaos-testing.png](docs/images/chaos-testing.png)
 To test your app's resiliency to handle faulty HTTP responses, you can inject faulty HTTP 5XX responses. The following request should result in 75% HTTP 503 responses
 
 ```bash
@@ -102,6 +104,15 @@ HTTP 503
 HTTP 200
 HTTP 200
 HTTP 503
+```
+
+## Kiali Dashboard
+
+![kiali-home.png](docs/images/kiali-home.png)
+To visualize the various request flows, you can use the Kiali dashboard. Extract the Kiali URL using
+
+```bash
+oc -n istio-system get route kiali -o jsonpath='{ .spec.host }{"\n"}'
 ```
 
 ## Customize the demo
