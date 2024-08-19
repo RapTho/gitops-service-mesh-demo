@@ -7,20 +7,11 @@ metadata:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
     argocd.argoproj.io/sync-wave: "2"
 spec:
-  hosts:
-  - '*'
+  hosts: 
+  - "*"
   gateways:
   - sample-app-gw
   http:
-    - route:
-        - destination: 
-            host: sample-app
-            subset: v1
-          weight: 80
-        - destination: 
-            host: sample-app
-            subset: v2
-          weight: 20
     - match:
         - headers:
             env:
@@ -30,23 +21,27 @@ spec:
             host: sample-app
             subset: v3
       mirror:
-        destination:
           host: sample-app
           subset: v4
     - match:
         - headers:
             fail:
               exact: "true"
-      fault:
-        abort:
-          percentage:
-            value: 75
-          httpStatus: 503
       route:
         - destination:
             host: sample-app
             subset: v5
-      # retries:
-      #   attempts: 4
-      #   perTryTimeout: 2s
-      #   retryOn: 5xx,retriable-4xx
+      fault:
+        abort:
+          httpStatus: 503
+          percentage:
+            value: 75
+    - route:
+      - destination: 
+          host: sample-app
+          subset: v1
+        weight: 80
+      - destination: 
+          host: sample-app
+          subset: v2
+        weight: 20
