@@ -7,4 +7,4 @@ metadata:
     argocd.argoproj.io/secret-type: repository
 stringData:
   type: git
-  url: https://github.com/RapTho/service-mesh-demo
+  url: https://github.com/RapTho/gitops-service-mesh-demo
