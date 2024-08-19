@@ -27,8 +27,8 @@ EOF
 Install task from Tekton Hub
 
 ```bash
-kubectl apply -f https://api.hub.tekton.dev/v1/resource/tekton/task/git-clone/0.9/raw
-kubectl apply -f https://api.hub.tekton.dev/v1/resource/tekton/task/kaniko/0.6/raw
+kubectl apply -n dev -f https://api.hub.tekton.dev/v1/resource/tekton/task/git-clone/0.9/raw
+kubectl apply -n dev -f https://api.hub.tekton.dev/v1/resource/tekton/task/kaniko/0.6/raw
 ```
 
 #### Secret
