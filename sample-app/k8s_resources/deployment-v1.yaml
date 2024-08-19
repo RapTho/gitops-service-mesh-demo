@@ -39,4 +39,4 @@ spec:
               path: /healthz
               port: 8080
             initialDelaySeconds: 3
-            periodSeconds: 3 
+            periodSeconds: 10 
