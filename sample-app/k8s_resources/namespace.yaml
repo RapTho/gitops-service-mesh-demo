@@ -4,7 +4,8 @@ metadata:
   name: dev
   annotations:
     argocd.argoproj.io/sync-wave: "1"
-    operator.tekton.dev/prune.keep: "3"
-    operator.tekton.dev/prune.schedule: "10"
   labels:
     argocd.argoproj.io/managed-by: openshift-gitops
+spec:
+    operator.tekton.dev/prune.keep: "3"
+    operator.tekton.dev/prune.schedule: "10"
