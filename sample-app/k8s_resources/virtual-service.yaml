@@ -12,6 +12,15 @@ spec:
   gateways:
   - sample-app-gw
   http:
+    - route:
+      - destination: 
+          host: sample-app
+          subset: v1
+        weight: 80
+      - destination: 
+          host: sample-app
+          subset: v2
+        weight: 20
     - match:
         - headers:
             env:
@@ -23,12 +32,15 @@ spec:
       mirror:
           host: sample-app
           subset: v4
-    - route:
-      - destination: 
+    - fault:
+        abort:
+          httpStatus: 503
+          percentage: 75
+      route:
+      - destination:
           host: sample-app
-          subset: v1
-        weight: 80
-      - destination: 
-          host: sample-app
-          subset: v2
-        weight: 20
+          subset: v5
+      retries:
+        attempts: 4
+        perTryTimeout: 2s
+        retryOn: 5xx,retriable-4xx

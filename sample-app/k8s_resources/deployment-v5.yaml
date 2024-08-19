@@ -1,0 +1,42 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: sample-app-sa-v5
+  namespace: dev
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-app-v5
+  labels:
+    app: sample-app-v5
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sample-app
+  template:
+    metadata:
+      labels: 
+        app: sample-app
+        version: v5
+      annotations:
+        sidecar.istio.io/inject: "true"
+    spec:
+      serviceAccountName: sample-app-sa-v5
+      containers:
+        - name: sample-app
+          image: quay.io/raphael_tholl/sample-app:latest
+          imagePullPolicy: Always
+          ports: 
+            - containerPort: 8080
+          livenessProbe: 
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 3
+            periodSeconds: 3 
