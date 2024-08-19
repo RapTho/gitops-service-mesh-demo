@@ -17,7 +17,7 @@ router.get("/fail", (req: Request, res: Response) => {
         res.sendStatus(503);
     } else {
         counter = 0;
-        res.sendStatus(200);
+        res.send(`Hello my version is: ${process.env.VERSION || "v1"}\n`);
     }
 })
 
