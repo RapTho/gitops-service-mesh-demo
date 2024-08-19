@@ -31,6 +31,7 @@ const server = app.listen(PORT, () => {
 process.on("SIGTERM", () => {
   console.info("SIGTERM signal received. Closing server!");
   server.close();
+  process.exit(0);
 });
 
 // Uncaught errors
