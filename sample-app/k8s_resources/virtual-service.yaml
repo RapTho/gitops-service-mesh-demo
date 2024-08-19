@@ -8,7 +8,7 @@ metadata:
     argocd.argoproj.io/sync-wave: "2"
 spec:
   hosts:
-  - '*'  # Using '*' for the host
+  - '*'
   gateways:
   - sample-app-gw
   http:
@@ -33,16 +33,20 @@ spec:
         destination:
           host: sample-app
           subset: v4
-    - fault:
+    - match:
+        - headers:
+            fail:
+              exact: "true"
+      fault:
         abort:
-          httpStatus: 503
-          percentage: 
+          percentage:
             value: 75
+          httpStatus: 503
       route:
         - destination:
             host: sample-app
             subset: v5
-      retries:
-        attempts: 4
-        perTryTimeout: 2s
-        retryOn: 5xx,retriable-4xx
+      # retries:
+      #   attempts: 4
+      #   perTryTimeout: 2s
+      #   retryOn: 5xx,retriable-4xx
