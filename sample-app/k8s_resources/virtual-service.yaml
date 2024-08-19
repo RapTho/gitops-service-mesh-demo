@@ -1,26 +1,26 @@
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
-  name: sample-app-v1-vs
+  name: sample-app-vs
   namespace: dev
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
     argocd.argoproj.io/sync-wave: "2"
 spec:
-  hosts: 
-  - "*"
+  hosts:
+  - '*'  # Using '*' for the host
   gateways:
   - sample-app-gw
   http:
     - route:
-      - destination: 
-          host: sample-app
-          subset: v1
-        weight: 80
-      - destination: 
-          host: sample-app
-          subset: v2
-        weight: 20
+        - destination: 
+            host: sample-app
+            subset: v1
+          weight: 80
+        - destination: 
+            host: sample-app
+            subset: v2
+          weight: 20
     - match:
         - headers:
             env:
@@ -30,16 +30,18 @@ spec:
             host: sample-app
             subset: v3
       mirror:
+        destination:
           host: sample-app
           subset: v4
     - fault:
         abort:
           httpStatus: 503
-          percentage: 75
+          percentage: 
+            value: 75
       route:
-      - destination:
-          host: sample-app
-          subset: v5
+        - destination:
+            host: sample-app
+            subset: v5
       retries:
         attempts: 4
         perTryTimeout: 2s
