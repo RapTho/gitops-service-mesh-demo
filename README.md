@@ -7,6 +7,9 @@ A demo of OpenShift Service Mesh deployed using GitOps
 - Traffic routing 80/20 (canary deployment) between application versions v1 / v2
 - Traffic routing based on request header for app v3
 - Mirror traffic from app v3 to app v4 without app v4 having to respond to client requests.
+- Chaos testing: fake HTTP 5XX responses.
+- Automatic request retry
+- Circuit breaker
 - Automatic deployment via ArgoCD (GitOps)
 - Automatic container image build pipeline (Tekton)
 
@@ -75,6 +78,30 @@ $ curl -H "env: dev" http://${SERVICE_MESH_INGRESS_GW}/api/v1
 Hello my version is: development
 $ kubectl logs -l version=v4 | grep -v /healthz
 ::ffff:10.129.2.235 - - [16/Aug/2024:14:45:38 +0000] 'GET /api/v1 HTTP/1.1' 200 28
+```
+
+#### Chaos testing
+
+To test your app's resiliency to handle faulty HTTP responses, you can inject faulty HTTP 5XX responses. The following request should result in 75% HTTP 503 responses
+
+```bash
+for i in $(seq 10); do curl -s -o /dev/null -w "HTTP %{http_code}\n" -H "fail: true" http://${SERVICE_MESH_INGRESS_GW}/api/v1; done
+```
+
+The above `curl`request only returns the HTTP status code. As you can see roughtly 3/4 of the requests fail intentionally.
+
+```bash
+$ for i in $(seq 10); do curl -s -o /dev/null -w "HTTP %{http_code}\n" -H "fail: true" http://${SERVICE_MESH_INGRESS_GW}/api/v1; done
+HTTP 503
+HTTP 503
+HTTP 503
+HTTP 503
+HTTP 503
+HTTP 503
+HTTP 503
+HTTP 200
+HTTP 200
+HTTP 503
 ```
 
 ## Customize the demo
