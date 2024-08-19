@@ -1,3 +1,10 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: sample-app-sa-v3
+  namespace: dev
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -20,7 +27,7 @@ spec:
       annotations:
         sidecar.istio.io/inject: "true"
     spec:
-      serviceAccountName: sample-app-sa
+      serviceAccountName: sample-app-sa-v3
       containers:
         - name: sample-app
           image: quay.io/raphael_tholl/sample-app:latest
