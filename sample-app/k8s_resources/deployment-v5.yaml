@@ -34,6 +34,9 @@ spec:
           imagePullPolicy: Always
           ports: 
             - containerPort: 8080
+          env:
+          - name: VERSION
+            value: v5
           livenessProbe: 
             httpGet:
               path: /healthz
