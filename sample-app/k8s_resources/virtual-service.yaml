@@ -12,36 +12,41 @@ spec:
   gateways:
   - sample-app-gw
   http:
-    - match:
-        - headers:
-            env:
-              exact: "dev"
-      route:
-        - destination:
-            host: sample-app
-            subset: v3
-      mirror:
-          host: sample-app
-          subset: v4
-    - match:
-        - headers:
-            fail:
-              exact: "true"
-      route:
-        - destination:
-            host: sample-app
-            subset: v5
-      fault:
-        abort:
-          httpStatus: 503
-          percentage:
-            value: 75
-    - route:
-      - destination: 
-          host: sample-app
-          subset: v1
-        weight: 80
-      - destination: 
-          host: sample-app
-          subset: v2
-        weight: 20
+  - name: "header-based and mirroring"
+    match:
+    - headers:
+        env:
+          exact: dev
+    mirror:
+      host: sample-app
+      subset: v4
+    route:
+    - destination:
+        host: sample-app
+        subset: v3
+
+  - name: "header-based and chaos testing"
+    fault:
+      abort:
+        httpStatus: 503
+        percentage:
+          value: 75
+    match:
+    - headers:
+        fail:
+          exact: "true"
+    route:
+    - destination:
+        host: sample-app
+        subset: v5
+
+  - name: "Default rule with canary deployment"
+    route:
+    - destination:
+        host: sample-app
+        subset: v1
+      weight: 80
+    - destination:
+        host: sample-app
+        subset: v2
+      weight: 20
