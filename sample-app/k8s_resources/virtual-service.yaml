@@ -40,6 +40,15 @@ spec:
         host: sample-app
         subset: v5
 
+  - name: "path-based routing"
+    match:
+    - uri:
+        exact: "/api/v1/fail"
+    route:
+    - destination:
+        host: sample-app
+        subset: v6
+
   - name: "Default rule with canary deployment"
     route:
     - destination:
