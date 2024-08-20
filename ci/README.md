@@ -78,3 +78,26 @@ To automatically remove old pipeline runs and their associated persistent volume
 ```bash
 kubectl apply -f tektonConfig.yaml
 ```
+
+## Trigger builds on git push
+
+To automatic start a pipeline run based on git pushes that affect the `sample-app`, apply the following ressources
+
+```bash
+kubectl apply -f eventListener.yaml
+kubectl apply -f triggerBinding.yaml
+kubectl apply -f triggerTemplate.yaml
+```
+
+Then expose the new eventlistener service to create a webhook. The following example only works on OpenShift. For Kubernetes, you can expose the service differently.
+
+```bash
+oc -n dev create route edge github-evenlistener --service el-github-listener
+```
+
+Extract the hostname and register it as a new webhook in your git repo. Make sure the content type is `application/json`. For Github you can use [these instructions](https://docs.github.com/en/webhooks/using-webhooks/creating-webhooks).
+
+```bash
+URL=$(oc -n dev get routes github-evenlistener -o jsonpath='{ .spec.host }')
+echo "https://${URL}"
+```

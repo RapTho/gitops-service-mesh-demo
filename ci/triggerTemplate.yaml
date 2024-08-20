@@ -1,0 +1,38 @@
+apiVersion: triggers.tekton.dev/v1beta1
+kind: TriggerTemplate
+metadata:
+  name: build-pipeline-template
+  namespace: dev
+spec:
+  params:
+    - name: repo-url
+    - name: image-reference
+    - name: dockerfile-path
+  resourcetemplates:
+    - apiVersion: tekton.dev/v1beta1
+      kind: PipelineRun
+      metadata:
+        generateName: clone-build-push-run-
+        namespace: dev
+      spec:
+        pipelineRef:
+          name: clone-build-push
+        workspaces:
+        - name: shared-data
+          volumeClaimTemplate:
+            spec:
+              accessModes:
+              - ReadWriteOnce
+              resources:
+                requests:
+                  storage: 3Gi
+        - name: quay-credentials
+          secret:
+            secretName: quay-credentials
+        params:
+        - name: repo-url
+          value: https://github.com/RapTho/gitops-service-mesh-demo.git
+        - name: image-reference
+          value: quay.io/raphael_tholl/sample-app:latest
+        - name: dockerfile-path
+          value: Containerfile
