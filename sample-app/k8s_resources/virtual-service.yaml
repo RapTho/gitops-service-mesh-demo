@@ -44,6 +44,10 @@ spec:
     match:
     - uri:
         exact: "/api/v1/fail"
+    retries:
+      attempts: 5
+      perTryTimeout: 2s
+      retryOn: "5xx,retriable-4xx"
     route:
     - destination:
         host: sample-app
