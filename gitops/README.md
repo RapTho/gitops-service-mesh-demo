@@ -14,7 +14,7 @@ oc apply -f subscription.yaml
 oc apply -f argocd-repository.yaml
 ```
 
-# Create applications
+# Let ArgoCD deploy all ressources
 
 ```
 oc apply -f argo-apps/
