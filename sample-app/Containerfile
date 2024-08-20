@@ -4,8 +4,6 @@ FROM node@sha256:a7ff16657263663c1e92ba3060cdbba0e77329a0a4cb3c27bbbbe90c6e20bd8
 
 WORKDIR /app
 
-# test
-
 # Check .dockerignore for what's ignored
 COPY . .
 
