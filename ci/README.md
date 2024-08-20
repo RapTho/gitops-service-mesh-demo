@@ -70,3 +70,11 @@ After creating the secret for your CR and adjusting the CR string in the pipelin
 kubectl apply -f pipeline.yaml
 kubectl create -f pipelinerun.yaml
 ```
+
+## Tekton Pruner
+
+To automatically remove old pipeline runs and their associated persistent volumes, apply the provided TektonConfig with job that runs every 10min.
+
+```bash
+kubectl apply -f tektonConfig.yaml
+```
