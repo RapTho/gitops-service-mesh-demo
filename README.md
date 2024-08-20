@@ -8,6 +8,7 @@ A demo of OpenShift Service Mesh deployed using GitOps
 - Traffic routing based on request header for app v3
 - Mirror traffic from app v3 to app v4 without app v4 having to respond to client requests.
 - Chaos testing: fake HTTP 5XX responses.
+- Automatic retry on failed requests.
 - Automatic deployment via ArgoCD (GitOps)
 - Automatic container image build pipeline (Tekton)
 - Kiali Dashboard to visualize request flows
@@ -104,6 +105,48 @@ HTTP 503
 HTTP 200
 HTTP 200
 HTTP 503
+```
+
+#### Automatic retry
+
+In a distributed world it has to be expected that requests fail from time to time. To free the developers of having to implement the retry logic themselves over and over again, you can outsource this logic to the service mesh.
+
+The app's `/api/v1/fail` endpoint is designed to fail 75% of the times by returning a HTTP 503 server error message.
+Traffic to this endpoint will be routed by the service mesh to `v6` and there's an automatic retry policy that retries 5 times in case of pre-defined errors. Thus, the client will not even realize that 75% of the requests fail.
+
+Test the endpoint by sending 4 requests to the `/api/v1/fail` endpoint and observe that each request succeeds.
+
+```bash
+$ for i in $(seq 4); do curl http://${SERVICE_MESH_INGRESS_GW}/api/v1/fail; done
+Hello my version is: v6
+Hello my version is: v6
+Hello my version is: v6
+Hello my version is: v6
+```
+
+When looking at the v6 pod's logs on the otherhand, we see that the majority of the requests failed but the service mesh automatically retried the requests on failures.
+
+```log
+::ffff:127.0.0.6 - - [20/Aug/2024:08:31:02 +0000] "GET /api/v1/fail HTTP/1.1" 503 19 "-" "curl/8.7.1"
+::ffff:127.0.0.6 - - [20/Aug/2024:08:31:02 +0000] "GET /api/v1/fail HTTP/1.1" 503 19 "-" "curl/8.7.1"
+::ffff:127.0.0.6 - - [20/Aug/2024:08:31:03 +0000] "GET /api/v1/fail HTTP/1.1" 503 19 "-" "curl/8.7.1"
+::ffff:127.0.0.6 - - [20/Aug/2024:08:31:03 +0000] "GET /api/v1/fail HTTP/1.1" 503 19 "-" "curl/8.7.1"
+::ffff:127.0.0.6 - - [20/Aug/2024:08:31:03 +0000] "GET /api/v1/fail HTTP/1.1" 200 24 "-" "curl/8.7.1"
+::ffff:127.0.0.6 - - [20/Aug/2024:08:31:03 +0000] "GET /api/v1/fail HTTP/1.1" 503 19 "-" "curl/8.7.1"
+::ffff:127.0.0.6 - - [20/Aug/2024:08:31:03 +0000] "GET /api/v1/fail HTTP/1.1" 503 19 "-" "curl/8.7.1"
+::ffff:127.0.0.6 - - [20/Aug/2024:08:31:03 +0000] "GET /api/v1/fail HTTP/1.1" 503 19 "-" "curl/8.7.1"
+::ffff:127.0.0.6 - - [20/Aug/2024:08:31:03 +0000] "GET /api/v1/fail HTTP/1.1" 503 19 "-" "curl/8.7.1"
+::ffff:127.0.0.6 - - [20/Aug/2024:08:31:03 +0000] "GET /api/v1/fail HTTP/1.1" 200 24 "-" "curl/8.7.1"
+::ffff:127.0.0.6 - - [20/Aug/2024:08:31:03 +0000] "GET /api/v1/fail HTTP/1.1" 503 19 "-" "curl/8.7.1"
+::ffff:127.0.0.6 - - [20/Aug/2024:08:31:03 +0000] "GET /api/v1/fail HTTP/1.1" 503 19 "-" "curl/8.7.1"
+::ffff:127.0.0.6 - - [20/Aug/2024:08:31:03 +0000] "GET /api/v1/fail HTTP/1.1" 503 19 "-" "curl/8.7.1"
+::ffff:127.0.0.6 - - [20/Aug/2024:08:31:03 +0000] "GET /api/v1/fail HTTP/1.1" 503 19 "-" "curl/8.7.1"
+::ffff:127.0.0.6 - - [20/Aug/2024:08:31:03 +0000] "GET /api/v1/fail HTTP/1.1" 200 24 "-" "curl/8.7.1"
+::ffff:127.0.0.6 - - [20/Aug/2024:08:31:03 +0000] "GET /api/v1/fail HTTP/1.1" 503 19 "-" "curl/8.7.1"
+::ffff:127.0.0.6 - - [20/Aug/2024:08:31:03 +0000] "GET /api/v1/fail HTTP/1.1" 503 19 "-" "curl/8.7.1"
+::ffff:127.0.0.6 - - [20/Aug/2024:08:31:03 +0000] "GET /api/v1/fail HTTP/1.1" 503 19 "-" "curl/8.7.1"
+::ffff:127.0.0.6 - - [20/Aug/2024:08:31:03 +0000] "GET /api/v1/fail HTTP/1.1" 503 19 "-" "curl/8.7.1"
+::ffff:127.0.0.6 - - [20/Aug/2024:08:31:03 +0000] "GET /api/v1/fail HTTP/1.1" 200 24 "-" "curl/8.7.1"
 ```
 
 ## Kiali Dashboard
