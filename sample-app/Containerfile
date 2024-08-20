@@ -14,7 +14,7 @@ RUN npm install --no-fund &&\
 # Node.js 18.20.4-alpine
 FROM node@sha256:17514b20acef0e79691285e7a59f3ae561f7a1702a9adc72a515aef23f326729
 
-LABEL maintainer="Raphael Tholl raphael.tholl@ibm.com"
+LABEL maintainer="Raphael Tholl - raphael.tholl@ibm.com"
 
 ENV NODE_ENV=production
 
