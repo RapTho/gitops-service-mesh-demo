@@ -12,7 +12,6 @@ app.use(
   )
 );
 
-// Parse request body as JSON
 app.use(express.json());
 
 // Routes
