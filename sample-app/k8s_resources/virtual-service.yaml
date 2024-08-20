@@ -40,7 +40,7 @@ spec:
         host: sample-app
         subset: v5
 
-  - name: "path-based routing"
+  - name: "path-based with retry"
     match:
     - uri:
         exact: "/api/v1/fail"
