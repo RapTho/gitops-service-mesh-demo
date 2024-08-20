@@ -25,7 +25,7 @@ oc apply -f argo-apps/
 To watch what's happening you can open ArgoCD's user interface. You can get the link by executing the extraction command below.
 
 ```
-oc get route/openshift-gitops-server -n openshift-gitops -o jsonpath='{.spec.host}{"\n"}'
+oc get route/openshift-gitops-server -n openshift-gitops -o jsonpath='{ .spec.host }{"\n"}'
 ```
 
 # Login credentials for ArgoCD admin user
