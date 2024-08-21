@@ -151,7 +151,7 @@ When looking at the v6 pod's logs on the otherhand, we see that the majority of 
 
 ## Kiali Dashboard
 
-![kiali-home.png](docs/images/kiali-home.png)
+![kiali-home.png](docs/images/kiali-dashboard.png) <br>
 To visualize the various request flows, you can use the Kiali dashboard. Extract the Kiali URL using
 
 ```bash
