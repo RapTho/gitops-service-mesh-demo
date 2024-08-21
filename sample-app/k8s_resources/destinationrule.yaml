@@ -2,11 +2,15 @@ apiVersion: networking.istio.io/v1beta1
 kind: DestinationRule
 metadata:
   name: sample-app-dr
+  namespace: istio-system
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
     argocd.argoproj.io/sync-wave: "2"
 spec:
   host: sample-app.dev.svc.cluster.local
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
   subsets:
   - name: v1
     labels:
