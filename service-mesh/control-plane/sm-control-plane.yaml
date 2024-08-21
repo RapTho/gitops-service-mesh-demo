@@ -15,6 +15,11 @@ spec:
       trafficControl:
         outbound:
           policy: REGISTRY_ONLY
+  security:
+    dataPlane:
+      mtls: true
+    controlPlane:
+      mtls: true
   policy:
     type: Istiod
   addons:
