@@ -18,7 +18,7 @@ spec:
         env:
           exact: dev
     mirror:
-      host: ssample-app.dev.svc.cluster.local
+      host: sample-app.dev.svc.cluster.local
       subset: v4
     route:
     - destination:
