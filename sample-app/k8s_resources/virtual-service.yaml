@@ -2,7 +2,7 @@ apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
   name: sample-app-vs
-  namespace: dev
+  namespace: istio-system
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
     argocd.argoproj.io/sync-wave: "2"
@@ -18,11 +18,11 @@ spec:
         env:
           exact: dev
     mirror:
-      host: sample-app
+      host: ssample-app.dev.svc.cluster.local
       subset: v4
     route:
     - destination:
-        host: sample-app
+        host: sample-app.dev.svc.cluster.local
         subset: v3
 
   - name: "header-based and chaos testing"
@@ -37,7 +37,7 @@ spec:
           exact: "true"
     route:
     - destination:
-        host: sample-app
+        host: sample-app.dev.svc.cluster.local
         subset: v5
 
   - name: "path-based with retry"
@@ -50,16 +50,16 @@ spec:
       retryOn: "5xx,retriable-4xx"
     route:
     - destination:
-        host: sample-app
+        host: sample-app.dev.svc.cluster.local
         subset: v6
 
   - name: "Default rule with canary deployment"
     route:
     - destination:
-        host: sample-app
+        host: sample-app.dev.svc.cluster.local
         subset: v1
       weight: 80
     - destination:
-        host: sample-app
+        host: sample-app.dev.svc.cluster.local
         subset: v2
       weight: 20
