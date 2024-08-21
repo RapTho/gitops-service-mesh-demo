@@ -11,9 +11,13 @@ spec:
     istio: ingressgateway
   servers:
     - port:
-        number: 443
-        name: https
-        protocol: HTTPS
+        number: 80
+        name: http
+        protocol: HTTP
+    # - port:
+    #     number: 443
+    #     name: https
+    #     protocol: HTTPS
       # tls:
       #   mode: SIMPLE
       #   credentialName: ingress-certs
