@@ -23,7 +23,7 @@ A demo of OpenShift Service Mesh deployed using GitOps
 
 After deploying the service mesh and various application versions, you can showcase the different capabilities using the `curl` requests below.
 
-Note that all requests go to the same endpoint. Traffic routing is done on the server side using a [virtual service](sample-app/k8s_resources/virtual-service.yaml).
+Note that all requests go to the same endpoint. Traffic routing is done on the server side using a [virtual service](service-mesh/control-plane/virtual-service.yaml).
 
 #### 80/20 traffic routing
 
@@ -37,7 +37,7 @@ export SERVICE_MESH_INGRESS_GW=$(oc -n istio-system get route istio-ingressgatew
 for i in $(seq 10); do curl http://${SERVICE_MESH_INGRESS_GW}/api/v1; done
 ```
 
-And see that the applied [virtual service](sample-app/k8s_resources/virtual-service.yaml) routes approximately 80% to v1 whereas 20% of the responses come from v2. This can be useful for canary deployments.
+And see that the applied [virtual service](service-mesh/control-plane/virtual-service.yaml) routes approximately 80% to v1 whereas 20% of the responses come from v2. This can be useful for canary deployments.
 
 ```bash
 $ for i in $(seq 10); do curl http://${SERVICE_MESH_INGRESS_GW}/api/v1; done
