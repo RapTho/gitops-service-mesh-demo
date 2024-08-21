@@ -16,6 +16,6 @@ spec:
         protocol: HTTPS
       tls:
         mode: SIMPLE
-        credentialName: letsencrypt-certs
+        credentialName: ingress-certs
       hosts:
         - "*"
