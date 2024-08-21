@@ -16,6 +16,6 @@ spec:
         protocol: HTTPS
       tls:
         mode: SIMPLE
-        credentialName: openshift-ingress-certs
+        credentialName: openshift-ingress-cer
       hosts:
         - "*"
