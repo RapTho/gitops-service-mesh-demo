@@ -24,6 +24,6 @@ spec:
         protocol: HTTPS
       tls:
         mode: SIMPLE
-        credentialName: istio-ca-secret
+        credentialName: openshift-ingress-operator/router-certs-default
       hosts:
         - "*"
