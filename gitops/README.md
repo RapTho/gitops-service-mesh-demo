@@ -11,18 +11,18 @@ oc apply -f subscription.yaml
 # Link Git repo to ArgoCD
 
 ```
-oc apply -f argocd-repository.yaml
+kubectl apply -f argocd-repository.yaml
 ```
 
 # Let ArgoCD deploy all ressources
 
 ```
-oc apply -f argo-apps/
+kubectl apply -f argo-apps/
 ```
 
 # Open ArgoCD
 
-To watch what's happening you can open ArgoCD's user interface. You can get the link by executing the extraction command below.
+To watch what's happening you can open ArgoCD's user interface. You can get the ArgoCD UI URL by executing the extraction command below. This works on OpenShift only.
 
 ```
 oc get route/openshift-gitops-server -n openshift-gitops -o jsonpath='{ .spec.host }{"\n"}'
@@ -35,5 +35,5 @@ username: admin
 Extract the password
 
 ```
-oc extract secret/openshift-gitops-cluster -n openshift-gitops --keys=admin.password --to=-
+kubectl extract secret/openshift-gitops-cluster -n openshift-gitops --keys=admin.password --to=-
 ```
