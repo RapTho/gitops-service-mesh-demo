@@ -3,7 +3,7 @@
 A demo of OpenShift Service Mesh deployed using GitOps. <br>
 Istio is an open source service mesh that uses a proxy to intercept all your network traffic, allowing a broad set of application-aware features based on configuration you set.
 
-<img src=https://istio.io/latest/docs/ops/deployment/architecture/arch.svg width=75%>
+![Istio architecture](https://istio.io/latest/docs/ops/deployment/architecture/arch.svg)
 
 ## Key Features
 
