@@ -5,7 +5,7 @@
 Create the operator by applying the [subscription.yaml](subscription.yaml)
 
 ```
-oc apply -f subscription.yaml
+kubectl apply -f subscription.yaml
 ```
 
 # Link Git repo to ArgoCD
