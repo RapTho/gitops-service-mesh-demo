@@ -35,7 +35,7 @@ Note that all requests go to the same endpoint. Traffic routing is done on the s
 Send 10 requests to the app's v1 endpoint
 
 ```bash
-export SERVICE_MESH_INGRESS_GW=$(oc -n istio-system get route istio-ingressgateway -o jsonpath="{ .spec.host }")
+export SERVICE_MESH_INGRESS_GW=$(kubectl -n istio-system get route istio-ingressgateway -o jsonpath="{ .spec.host }")
 
 for i in $(seq 10); do curl http://${SERVICE_MESH_INGRESS_GW}/api/v1; done
 ```
@@ -158,7 +158,7 @@ When looking at the v6 pod's logs on the otherhand, we see that the majority of 
 To visualize the various request flows, you can use the Kiali dashboard. Extract the Kiali URL using
 
 ```bash
-oc -n istio-system get route kiali -o jsonpath='{ .spec.host }{"\n"}'
+kubectl -n istio-system get route kiali -o jsonpath='{ .spec.host }{"\n"}'
 ```
 
 ## Customize the demo
