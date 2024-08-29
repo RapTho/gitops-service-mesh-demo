@@ -23,7 +23,7 @@ WORKDIR /app
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/package*.json ./
 
-RUN npm install --no-fund --production
+RUN npm ci --omit=dev && rm -rf .npm
 
 EXPOSE 8080
 
