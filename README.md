@@ -7,16 +7,16 @@ Istio is an open source service mesh that uses a proxy to intercept all your net
 
 ## Key Features
 
-- Traffic routing 80/20 (canary deployment) between application versions v1 / v2
-- Traffic routing based on request header for app v3
-- Mirror traffic from app v3 to app v4 without app v4 having to respond to client requests.
-- Chaos testing: fake HTTP 5XX responses.
-- Automatic retry on failed requests.
-- Automatic deployment via ArgoCD (GitOps)
-- Automatic container image build pipeline (Tekton)
-- Kiali Dashboard to visualize request flows
+- Traffic [routing 80/20](#8020-traffic-routing) (canary deployment) between application versions v1 / v2
+- Traffic [routing based on request header](#header-based-routing) for app v3
+- [Mirror traffic](#mirroring-traffic) from app v3 to app v4 without app v4 having to respond to client requests.
+- [Chaos testing](#chaos-testing): fake HTTP 5XX responses.
+- [Automatic retry](#automatic-retry) on failed requests.
+- [Automatic deployment](/gitops/) via ArgoCD (GitOps)
+- Automatic container image [build pipeline](/ci/) (Tekton)
+- Kiali Dashboard to [visualize request flows](#kiali-dashboard)
 
-## How to use
+## How to setup
 
 1. Install [ArgoCD Operator](/gitops/README.md)
 2. Link the ArgoCD Repository
